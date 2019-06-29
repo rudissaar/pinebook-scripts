@@ -45,6 +45,28 @@ wget "${ARCHIVE_URL}" -O "${ARCHIVE_PATH}"
 
 unzip "${ARCHIVE_PATH}" -d "${CHATTY_DIR}"
 
+CHATTY_ICON_DIR="${POOL}/icons"
+[[ -d "${CHATTY_ICON_DIR}" ]] || mkdir -p "${CHATTY_ICON_DIR}"
+
+if [[ ! -f "${CHATTY_ICON_DIR}/chatty.png" ]]; then
+    wget "${ICON_URL}" -O "${CHATTY_ICON_DIR}/chatty.png"
+fi
+
+cat > "${POOL}/share/applications/chatty.desktop" <<EOL
+[Desktop Entry]
+Version=${VERSION}
+Name=Chatty
+GenericName=Chatty
+Comment=Twitch Chat Client written in Java
+Exec=java -jar ${CHATTY_DIR}/Chatty.jar
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Icon=${CHATTY_ICON_DIR}/chatty.png
+StartupNotify=true
+Categories=Network;InstantMessaging;
+EOL
+
 rm "${ARCHIVE_PATH}"
 
 echo '> Finished.'
