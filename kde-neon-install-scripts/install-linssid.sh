@@ -1,26 +1,20 @@
 #!/usr/bin/env bash
 # Script that installs linssid package from repository and applies required modifications.
 
-SUDO=''
-
+# You need root permissions to run this script.
 if [[ "${UID}" != '0' ]]; then
-    SUDO=$(which sudo)
-
-    if [[ "${?}" != '0' ]]; then
-        echo "> Unable to find 'sudo' from your environment's PATH variable."
-        echo '> Aborting.'
-    fi
+    echo "> Unable to find 'sudo' from your environment's PATH variable."
+    echo '> Aborting.'
+    exit 1
 fi
-
-${SUDO} apt update
 
 SED=$(which sed)
 
 if [[ "${?}" != '0' ]]; then
-    ${SUDO} apt install sed -y
+    apt install sed -y
 fi
 
-${SUDO} apt install linssid -y --reinstall
+apt install linssid -y --reinstall
 
 if [[ -f '/usr/share/applications/linssid.desktop' ]]; then
     ${SED} -i 's/^Exec=linssid$/Exec=pkexec --user root env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY linssid/g' \
@@ -28,3 +22,4 @@ if [[ -f '/usr/share/applications/linssid.desktop' ]]; then
 fi
 
 echo '> Finished.'
+
