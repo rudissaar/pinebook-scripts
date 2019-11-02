@@ -1,20 +1,16 @@
 #!/usr/bin/env bash
 # Script that applies fix for faulty man-pages.
 
-SUDO=''
-
+# You need root permissions to run this script.
 if [[ "${UID}" != '0' ]]; then
-    SUDO=$(which sudo)
-
-    if [[ "${?}" != '0' ]]; then
-        echo "> Unable to find 'sudo' from your environment's PATH variable."
-        echo '> Aborting.'
-    fi
+    echo "> Unable to find 'sudo' from your environment's PATH variable."
+    echo '> Aborting.'
+    exit 1
 fi
 
-${SUDO} apt update
-${SUDO} apt install apparmor-utils -y
-${SUDO} aa-disable $(which man)
+apt update
+apt install apparmor-utils -y
+aa-disable $(which man)
 
 echo '> Finished.'
 
