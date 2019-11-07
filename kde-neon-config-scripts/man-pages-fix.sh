@@ -3,11 +3,12 @@
 
 # You need root permissions to run this script.
 if [[ "${UID}" != '0' ]]; then
-    echo "> Unable to find 'sudo' from your environment's PATH variable."
+    echo '> You need to become root to run this script.'
     echo '> Aborting.'
     exit 1
 fi
 
+# Install packages.
 apt update
 apt install apparmor-utils -y
 aa-disable $(which man)
