@@ -47,6 +47,8 @@ mocp \$(curl -L -s \${URL} | jq .channels[].urls.mp3 | tr -d '"')
 
 EOL
 
+chmod 755 "${BIN_DIRECTORY}/mocp-rm.fm"
+
 # Let user know that script has finished its job.
 echo '> Finished.'
 

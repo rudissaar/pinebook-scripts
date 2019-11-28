@@ -1,0 +1,1 @@
+../kde-neon-config-scripts/mocp-rautemusik.sh
