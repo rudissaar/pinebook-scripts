@@ -12,13 +12,11 @@ fi
 
 # Function that checks if required binary exists and installs it if necassary.
 ENSURE_DEPENDENCY () {
-    REQUIRED_BINARY=$(basename ${1})
+    REQUIRED_BINARY=$(basename "${1}")
     REPO_PACKAGE="${2}"
     [[ ! -z "${REPO_PACKAGE}" ]] || REPO_PACKAGE="${REQUIRED_BINARY}"
 
-    which "${REQUIRED_BINARY}" 1> /dev/null 2>&1
-
-    if [[ "${?}" != '0' ]]; then
+    if ! command -v "${REQUIRED_BINARY}" 1> /dev/null; then
         if [[ "${REPO_UPDATED}" == '0' ]]; then
             apt update
             REPO_UPDATED=1
@@ -41,6 +39,7 @@ ENSURE_DEPENDENCY 'curl'
 
 cat > "${BIN_DIRECTORY}/mocp-rm.fm" <<EOL
 #!/usr/bin/env bash
+# shellcheck disable=SC2046
 
 URL='https://gist.githubusercontent.com/rudissaar/3cbb35a6072d7cd0e9fc7304d8c6528f/raw/1caa85f8c8eb740619016d16cff8856ca411a94a/rautemusik-channels.json'
 mocp \$(curl -L -s \${URL} | jq .channels[].urls.mp3 | tr -d '"')
