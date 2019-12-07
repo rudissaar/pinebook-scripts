@@ -13,27 +13,29 @@ if [[ "${UID}" != '0' ]]; then
     exit 1
 fi
 
-# Update repositories.
-apt update
+# Function that checks if required binary exists and installs it if necassary.
+ENSURE_DEPENDENCY () {
+    REQUIRED_BINARY=$(basename "${1}")
+    REPO_PACKAGE="${2}"
+    [[ ! -z "${REPO_PACKAGE}" ]] || REPO_PACKAGE="${REQUIRED_BINARY}"
 
-# Capture commands and install them if they are not already installed.
-WGET=$(which wget)
+    if ! command -v "${REQUIRED_BINARY}" 1> /dev/null; then
+        if [[ "${REPO_UPDATED}" == '0' ]]; then
+            apt update
+            REPO_UPDATED=1
+        fi
 
-if [[ "${?}" != '0' ]]; then
-    apt install wget -y
-fi
+        apt install -y "${REPO_PACKAGE}"
+    fi
+}
 
-UNZIP=$(which unzip)
+# Variable that keeps track if repository is already refreshed.
+REPO_UPDATED=0
 
-if [[ "${?}" != '0' ]]; then
-    apt install unzip -y
-fi
-
-JAVA=$(which java)
-
-if [[ "${?}" != '0' ]]; then
-    apt install openjdk-11-jre -y
-fi
+# Install packages if necessary.
+ENSURE_DEPENDENCY 'wget'
+ENSURE_DEPENDENCY 'unzip'
+ENSURE_DEPENDENCY 'java' 'default-jre'
 
 # Create directory for chatty.
 CHATTY_DIR="${POOL}/chatty"
@@ -41,17 +43,16 @@ mkdir -p "${CHATTY_DIR}"
 
 # Download and extract chatty archive.
 ARCHIVE_PATH="chatty-${VERSION}.zip"
-"${WGET}" "${ARCHIVE_URL}" -O "${ARCHIVE_PATH}"
+wget "${ARCHIVE_URL}" -O "${ARCHIVE_PATH}"
+unzip "${ARCHIVE_PATH}" -d "${CHATTY_DIR}"
 
-"${UNZIP}" "${ARCHIVE_PATH}" -d "${CHATTY_DIR}"
-
-# Create directory for chatty icons if it doesn' exist.
+# Create directory for chatty icons if it doesn't exist.
 CHATTY_ICON_DIR="${POOL}/icons"
 [[ -d "${CHATTY_ICON_DIR}" ]] || mkdir -p "${CHATTY_ICON_DIR}"
 
 # Download icon for chatty from internet if it doesn't exist locally.
 if [[ ! -f "${CHATTY_ICON_DIR}/chatty.png" ]]; then
-    "${WGET}" "${ICON_URL}" -O "${CHATTY_ICON_DIR}/chatty.png"
+    wget "${ICON_URL}" -O "${CHATTY_ICON_DIR}/chatty.png"
 fi
 
 # Generate desktop entry for chatty application.
@@ -73,5 +74,5 @@ EOL
 # Cleanup.
 rm "${ARCHIVE_PATH}"
 
+# Let user know that script has finished its job.
 echo '> Finished.'
-
