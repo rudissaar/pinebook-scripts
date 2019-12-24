@@ -13,8 +13,8 @@ fi
 # Function that checks if required binary exists and installs it if necassary.
 ENSURE_DEPENDENCY () {
     REQUIRED_BINARY=$(basename "${1}")
-    REPO_PACKAGE="${2}"
-    [[ ! -z "${REPO_PACKAGE}" ]] || REPO_PACKAGE="${REQUIRED_BINARY}"
+    REPO_PACKAGES="${*:2}"
+    [[ ! -z "${REPO_PACKAGES}" ]] || REPO_PACKAGES="${REQUIRED_BINARY}"
 
     if ! command -v "${REQUIRED_BINARY}" 1> /dev/null; then
         if [[ "${REPO_UPDATED}" == '0' ]]; then
@@ -22,7 +22,10 @@ ENSURE_DEPENDENCY () {
             REPO_UPDATED=1
         fi
 
-        apt install -y "${REPO_PACKAGE}"
+        for REPO_PACKAGE in ${REPO_PACKAGES}
+        do
+            apt install -y "${REPO_PACKAGE}"
+        done
     fi
 }
 
@@ -30,7 +33,7 @@ ENSURE_DEPENDENCY () {
 REPO_UPDATED=0
 
 # Install packages if necassary.
-ENSURE_DEPENDENCY 'mocp' 'moc'
+ENSURE_DEPENDENCY 'mocp' 'moc' 'moc-ffmpeg-plugin'
 ENSURE_DEPENDENCY 'jq'
 ENSURE_DEPENDENCY 'curl'
 
