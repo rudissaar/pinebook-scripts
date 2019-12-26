@@ -11,7 +11,7 @@ fi
 # Install packages.
 apt update
 apt install -y apparmor-utils
-aa-disable "$(which man)" 1> /dev/null 2>&1
+aa-disable "$(command -v man)" 1> /dev/null 2>&1
 
 # Let user know that script has finished its job.
 echo '> Finished.'
