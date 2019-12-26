@@ -57,6 +57,9 @@ if ! grep -Fq 'integer_battery_capacity' "${I3_STATUS_CONFIG_FILE}"; then
     sed -i '/^battery 0 {$/a \ \ \ \ \ \ \ \ integer_battery_capacity = true' "${I3_STATUS_CONFIG_FILE}"
 fi
 
+# Remove battery remaining indicator.
+sed -i '/format = "%status %percentage %remaining"/s/\ %remaining// ' "${I3_STATUS_CONFIG_FILE}"
+
 # Let user know that they should reload their desktop session.
 echo '> You should restart your desktop session in order for the changes to take effect.'
 
