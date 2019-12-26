@@ -50,8 +50,11 @@ if [[ ! -z "${UEVENT_PATH}" ]]; then
     fi
 else
     echo '> Unable to find uevent node for battery.'
-    echo '> Aborting.'
-    exit 1
+fi
+
+# Show battery percentage in integers.
+if ! grep -Fq 'integer_battery_capacity' "${I3_STATUS_CONFIG_FILE}"; then
+    sed -i '/^battery 0 {$/a \ \ \ \ \ \ \ \ integer_battery_capacity = true' "${I3_STATUS_CONFIG_FILE}"
 fi
 
 # Let user know that they should reload their desktop session.
