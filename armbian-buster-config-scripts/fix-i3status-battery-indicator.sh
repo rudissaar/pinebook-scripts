@@ -36,6 +36,9 @@ REPO_UPDATED=0
 ENSURE_DEPENDENCY 'sed'
 ENSURE_DEPENDENCY 'grep'
 
+# Generate backup file if it doesn't exist.
+[[ -f "${I3_STATUS_CONFIG_FILE}.bak" ]] || cp "${I3_STATUS_CONFIG_FILE}" "${I3_STATUS_CONFIG_FILE}.bak"
+
 # Rename battery all to battery 0.
 sed -i '/^order += "battery all"$/s/all/0/' "${I3_STATUS_CONFIG_FILE}"
 sed -i '/^battery all {$/s/all/0/' "${I3_STATUS_CONFIG_FILE}"
