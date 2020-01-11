@@ -11,7 +11,7 @@ if [[ "${UID}" != '0' ]]; then
     exit 1
 fi
 
-# Function that checks if required binary exists and installs it if necassary.
+# Function that checks if required binary exists and installs it if necessary.
 ENSURE_PACKAGE () {
     REQUIRED_BINARY=$(basename "${1}")
     REPO_PACKAGES="${*:2}"
@@ -40,7 +40,7 @@ ENSURE_PACKAGE () {
 # Variable that keeps track if repository is already refreshed.
 REPO_REFRESHED=0
 
-# Install packages if necassary.
+# Install packages if necessary.
 ENSURE_PACKAGE 'sed'
 ENSURE_PACKAGE 'grep'
 
