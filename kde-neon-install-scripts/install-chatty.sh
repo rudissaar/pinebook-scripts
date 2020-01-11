@@ -72,7 +72,7 @@ cp -r "${TMP_PATH}/"* "${CHATTY_PATH}/"
 
 # Create directory for chatty icons if it doesn't exist.
 CHATTY_ICON_PATH="${PACKAGE_POOL}/icons"
-[[ -d "${CHATTY_ICON_DIR}" ]] || mkdir -p "${CHATTY_ICON_PATH}"
+[[ -d "${CHATTY_ICON_PATH}" ]] || mkdir -p "${CHATTY_ICON_PATH}"
 
 # Download icon for chatty from internet if it doesn't exist locally.
 if [[ ! -f "${CHATTY_ICON_PATH}/chatty.png" ]]; then
@@ -80,17 +80,17 @@ if [[ ! -f "${CHATTY_ICON_PATH}/chatty.png" ]]; then
 fi
 
 # Generate desktop entry for chatty application.
-cat > "${POOL}/share/applications/chatty.desktop" <<EOL
+cat > "${PACKAGE_POOL}/share/applications/chatty.desktop" <<EOL
 [Desktop Entry]
 Version=${VERSION}
 Name=Chatty
 GenericName=Chatty
 Comment=Twitch Chat Client written in Java
-Exec=java -jar ${CHATTY_DIR}/Chatty.jar
+Exec=java -jar ${CHATTY_PATH}/Chatty.jar
 Terminal=false
 X-MultipleArgs=false
 Type=Application
-Icon=${CHATTY_ICON_DIR}/chatty.png
+Icon=${CHATTY_ICON_PATH}/chatty.png
 StartupNotify=true
 Categories=Network;InstantMessaging;
 EOL
