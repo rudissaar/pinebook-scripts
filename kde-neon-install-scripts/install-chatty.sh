@@ -2,9 +2,9 @@
 # Script that installs chatty application and related dependencies.
 
 VERSION='0.10'
-ARCHIVE_URL="https://github.com/chatty/chatty/releases/download/v${VERSION}/Chatty_${VERSION}.zip"
+DOWNLOAD_URL="https://github.com/chatty/chatty/releases/download/v${VERSION}/Chatty_${VERSION}.zip"
 ICON_URL='http://img.murda.eu/ch/chatty.png'
-POOL='/usr/local'
+PACKAGE_POOL='/usr/local'
 
 # You need root permissions to run this script.
 if [[ "${UID}" != '0' ]]; then
@@ -13,46 +13,70 @@ if [[ "${UID}" != '0' ]]; then
     exit 1
 fi
 
-# Function that checks if required binary exists and installs it if necassary.
-ENSURE_DEPENDENCY () {
+# Function that checks if required binary exists and installs it if necessary.
+ENSURE_PACKAGE () {
     REQUIRED_BINARY=$(basename "${1}")
-    REPO_PACKAGE="${2}"
-    [[ ! -z "${REPO_PACKAGE}" ]] || REPO_PACKAGE="${REQUIRED_BINARY}"
+    REPO_PACKAGES="${*:2}"
 
-    if ! command -v "${REQUIRED_BINARY}" 1> /dev/null; then
-        if [[ "${REPO_UPDATED}" == '0' ]]; then
-            apt update
-            REPO_UPDATED=1
-        fi
+    if [[ "${REQUIRED_BINARY}" != '-' ]]; then
+        [[ -n "${REPO_PACKAGES}" ]] || REPO_PACKAGES="${REQUIRED_BINARY}"
 
-        apt install -y "${REPO_PACKAGE}"
-    fi
+        if command -v "${REQUIRED_BINARY}" 1> /dev/null; then
+            REPO_PACKAGES=''
+        fi  
+    fi  
+
+    [[ -n "${REPO_PACKAGES}" ]] || return
+
+    if [[ "${REPO_REFRESHED}" == '0' ]]; then
+        echo '> Refreshing package repository.'
+        apt-get update 1> /dev/null
+        REPO_REFRESHED=1
+    fi  
+
+    for REPO_PACKAGE in ${REPO_PACKAGES}
+    do  
+        apt-get install -y "${REPO_PACKAGE}"
+    done
 }
 
 # Variable that keeps track if repository is already refreshed.
-REPO_UPDATED=0
+REPO_REFRESHED=0
 
 # Install packages if necessary.
-ENSURE_DEPENDENCY 'wget'
-ENSURE_DEPENDENCY 'unzip'
-ENSURE_DEPENDENCY 'java' 'default-jre'
+ENSURE_PACKAGE 'wget'
+ENSURE_PACKAGE 'unzip'
+ENSURE_PACKAGE 'java' 'default-jre'
 
-# Create directory for chatty.
-CHATTY_DIR="${POOL}/chatty"
-mkdir -p "${CHATTY_DIR}"
+# Create directory for Chatty.
 
-# Download and extract chatty archive.
-ARCHIVE_PATH="chatty-${VERSION}.zip"
-wget "${ARCHIVE_URL}" -O "${ARCHIVE_PATH}"
-unzip "${ARCHIVE_PATH}" -d "${CHATTY_DIR}"
+# Download Chatty archive.
+TMP_DATE="$(date +%s)"
+TMP_FILE="/tmp/chatty-${TMP_DATE}.zip"
+TMP_PATH="/tmp/chatty-${TMP_DATE}"
+
+if ! wget "${DOWNLOAD_URL}" -O "${TMP_FILE}"; then
+    echo '> Unable to download required files.'
+    echo '> Aborting.'
+    exit 1
+fi
+
+# Extract archive.
+[[ -d "${TMP_PATH}" ]] || mkdir -p "${TMP_PATH}"
+unzip "${TMP_FILE}" -d "${TMP_PATH}"
+
+# Copy files.
+CHATTY_PATH="${PACKAGE_POOL}/share/chatty"
+[[ -d "${CHATTY_PATH}" ]] || mkdir -p "${CHATTY_PATH}"
+cp -r "${TMP_PATH}/"* "${CHATTY_PATH}/"
 
 # Create directory for chatty icons if it doesn't exist.
-CHATTY_ICON_DIR="${POOL}/icons"
-[[ -d "${CHATTY_ICON_DIR}" ]] || mkdir -p "${CHATTY_ICON_DIR}"
+CHATTY_ICON_PATH="${PACKAGE_POOL}/icons"
+[[ -d "${CHATTY_ICON_DIR}" ]] || mkdir -p "${CHATTY_ICON_PATH}"
 
 # Download icon for chatty from internet if it doesn't exist locally.
-if [[ ! -f "${CHATTY_ICON_DIR}/chatty.png" ]]; then
-    wget "${ICON_URL}" -O "${CHATTY_ICON_DIR}/chatty.png"
+if [[ ! -f "${CHATTY_ICON_PATH}/chatty.png" ]]; then
+    wget "${ICON_URL}" -O "${CHATTY_ICON_PATH}/chatty.png"
 fi
 
 # Generate desktop entry for chatty application.
@@ -72,7 +96,7 @@ Categories=Network;InstantMessaging;
 EOL
 
 # Cleanup.
-rm "${ARCHIVE_PATH}"
+rm -rf "${TMP_FILE}" "${TMP_PATH}"
 
 # Let user know that script has finished its job.
 echo '> Finished.'
