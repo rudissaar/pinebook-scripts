@@ -10,31 +10,39 @@ if [[ "${UID}" != '0' ]]; then
     exit 1
 fi
 
-# Function that checks if required binary exists and installs it if necassary.
-ENSURE_DEPENDENCY () {
+# Function that checks if required binary exists and installs it if necessary.
+ENSURE_PACKAGE () {
     REQUIRED_BINARY=$(basename "${1}")
     REPO_PACKAGES="${*:2}"
-    [[ ! -z "${REPO_PACKAGES}" ]] || REPO_PACKAGES="${REQUIRED_BINARY}"
 
-    if ! command -v "${REQUIRED_BINARY}" 1> /dev/null; then
-        if [[ "${REPO_UPDATED}" == '0' ]]; then
-            apt update
-            REPO_UPDATED=1
-        fi
+    if [[ "${REQUIRED_BINARY}" != '-' ]]; then
+        [[ -n "${REPO_PACKAGES}" ]] || REPO_PACKAGES="${REQUIRED_BINARY}"
 
-        for REPO_PACKAGE in ${REPO_PACKAGES}
-        do
-            apt install -y "${REPO_PACKAGE}"
-        done
-    fi
+        if command -v "${REQUIRED_BINARY}" 1> /dev/null; then
+            REPO_PACKAGES=''
+        fi  
+    fi  
+
+    [[ -n "${REPO_PACKAGES}" ]] || return
+
+    if [[ "${REPO_REFRESHED}" == '0' ]]; then
+        echo '> Refreshing package repository.'
+        apt-get update 1> /dev/null
+        REPO_REFRESHED=1
+    fi  
+
+    for REPO_PACKAGE in ${REPO_PACKAGES}
+    do  
+        apt-get install -y "${REPO_PACKAGE}"
+    done
 }
 
 # Variable that keeps track if repository is already refreshed.
-REPO_UPDATED=0
+REPO_REFRESHED=0
 
-# Install packages if necassary.
-ENSURE_DEPENDENCY 'sed'
-ENSURE_DEPENDENCY 'grep'
+# Install packages and dependencies if necessary.
+ENSURE_PACKAGE 'sed'
+ENSURE_PACKAGE 'grep'
 
 # Generate backup file if it doesn't exist.
 [[ -f "${I3_STATUS_CONFIG_FILE}.bak" ]] || cp "${I3_STATUS_CONFIG_FILE}" "${I3_STATUS_CONFIG_FILE}.bak"
@@ -47,7 +55,7 @@ sed -i '/^battery all {$/s/all/0/' "${I3_STATUS_CONFIG_FILE}"
 SEARCH_PATH="$(find /sys/devices/platform/soc -name "*battery" 2> /dev/null | head -n 1)"
 UEVENT_PATH=$(find "${SEARCH_PATH}" -maxdepth 1 -name uevent)
 
-if [[ ! -z "${UEVENT_PATH}" ]]; then
+if [[ -n "${UEVENT_PATH}" ]]; then
     if ! grep -Fq "${UEVENT_PATH}" "${I3_STATUS_CONFIG_FILE}"; then
         sed -i '/^battery 0 {$/a \ \ \ \ \ \ \ \ path = "'"${UEVENT_PATH}"'"' "${I3_STATUS_CONFIG_FILE}"
     fi
