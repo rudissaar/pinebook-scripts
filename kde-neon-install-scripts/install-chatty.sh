@@ -3,7 +3,8 @@
 
 VERSION='0.10'
 DOWNLOAD_URL="https://github.com/chatty/chatty/releases/download/v${VERSION}/Chatty_${VERSION}.zip"
-ICON_URL='http://img.murda.eu/ch/chatty.png'
+ICON_URL='https://raw.githubusercontent.com/rudissaar/img-murda-eu/master/ch/chatty.png'
+ICON_URL_BACKUP='http://img.murda.eu/ch/chatty.png'
 PACKAGE_POOL='/usr/local'
 
 # You need root permissions to run this script.
@@ -48,8 +49,6 @@ ENSURE_PACKAGE 'wget'
 ENSURE_PACKAGE 'unzip'
 ENSURE_PACKAGE 'java' 'default-jre'
 
-# Create directory for Chatty.
-
 # Download Chatty archive.
 TMP_DATE="$(date +%s)"
 TMP_FILE="/tmp/chatty-${TMP_DATE}.zip"
@@ -76,7 +75,9 @@ CHATTY_ICON_PATH="${PACKAGE_POOL}/icons"
 
 # Download icon for chatty from internet if it doesn't exist locally.
 if [[ ! -f "${CHATTY_ICON_PATH}/chatty.png" ]]; then
-    wget "${ICON_URL}" -O "${CHATTY_ICON_PATH}/chatty.png"
+    if ! wget "${ICON_URL}" -O "${CHATTY_ICON_PATH}/chatty.png"; then
+        wget "${ICON_URL_BACKUP}" -O "${CHATTY_ICON_PATH}/chatty.png"
+    fi
 fi
 
 # Generate desktop entry for chatty application.
