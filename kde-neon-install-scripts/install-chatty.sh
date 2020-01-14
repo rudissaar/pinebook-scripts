@@ -70,7 +70,7 @@ CHATTY_PATH="${PACKAGE_POOL}/share/chatty"
 cp -r "${TMP_PATH}/"* "${CHATTY_PATH}/"
 
 # Create directory for chatty icons if it doesn't exist.
-CHATTY_ICON_PATH="${PACKAGE_POOL}/icons"
+CHATTY_ICON_PATH="${PACKAGE_POOL}/share/icons"
 [[ -d "${CHATTY_ICON_PATH}" ]] || mkdir -p "${CHATTY_ICON_PATH}"
 
 # Download icon for chatty from internet if it doesn't exist locally.
@@ -101,3 +101,4 @@ rm -rf "${TMP_FILE}" "${TMP_PATH}"
 
 # Let user know that script has finished its job.
 echo '> Finished.'
+
