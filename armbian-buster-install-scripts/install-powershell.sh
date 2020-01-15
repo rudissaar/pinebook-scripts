@@ -72,6 +72,7 @@ chmod +x "${POWERSHELL_PATH}/pwsh"
 
 # Link executable.
 ln -sf "${POWERSHELL_PATH}/pwsh" "${PACKAGE_POOL}/bin/pwsh"
+ln -sf "${PACKAGE_POOL}/bin/pwsh" "${PACKAGE_POOL}/bin/powershell"
 
 # Cleanup.
 rm -rf "${TMP_FILE}" "${TMP_PATH}"
