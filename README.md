@@ -4,8 +4,6 @@ Configuration and installation scripts for the original Pinebook (A64).
 
 ![Pinebook A64 14"](https://raw.githubusercontent.com/rudissaar/img-murda-eu/master/pi/pinebook-a64-14.png)
 
----
-
 * [kde-neon-config-scripts](./kde-neon-config-scripts)
   * [man-pages-fix.sh](./kde-neon-config-scripts/man-pages-fix.sh)
   * [polkit-system-update-no-passwd.sh](./kde-neon-config-scripts/polkit-system-update-no-passwd.sh)
