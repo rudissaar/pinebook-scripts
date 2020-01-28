@@ -86,6 +86,14 @@ chmod +x "${BOOKMARKS_SCRIPT_PATH}"
 [[ -d "${PACKAGE_POOL}/share/bookmarks" ]] || mkdir -p "${PACKAGE_POOL}/share/bookmarks"
 touch "${PACKAGE_POOL}/share/bookmarks/bookmarks"
 
+# Create file that can be used/sourced for uninstalling.
+cat > "${PACKAGE_POOL}/share/bookmarks/uninstall.txt" <<EOL
+rm -r "${PACKAGE_POOL}/share/bookmarks/bookmarks"
+rm -r "${PACKAGE_POOL}/share/bookmarks/uninstall.txt"
+rm -r "${PACKAGE_POOL}/bin/bookmarks.sh"
+rmdir "${PACKAGE_POOL}/share/bookmarks" 2> /dev/null
+EOL
+
 # Let user know that script has finished its job.
 echo '> Finished.'
 
