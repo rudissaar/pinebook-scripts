@@ -13,6 +13,7 @@ Configuration and installation scripts for the original Pinebook (A64).
   * [mocp-rautemusik.sh](./kde-neon-install-scripts/mocp-rautemusik.sh)
   * [install-chatty.sh](./kde-neon-install-scripts/install-chatty.sh)
 * [armbian-buster-config-scripts](./armbian-buster-config-scripts)
+  * [dmenu-web-browser-bookmarks.sh](./armbian-buster-config-scripts/dmenu-web-browser-bookmarks.sh)
   * [fix-i3status-battery-indicator.sh](./armbian-buster-config-scripts/fix-i3status-battery-indicator.sh)
   * [enable-desktop-switching-lightdm.sh](./armbian-buster-config-scripts/enable-desktop-switching-lightdm.sh)
   * [firefox-discord-app.sh](./kde-neon-config-scripts/firefox-discord-app.sh)
