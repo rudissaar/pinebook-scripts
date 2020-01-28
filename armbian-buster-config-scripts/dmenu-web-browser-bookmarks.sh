@@ -88,9 +88,9 @@ touch "${PACKAGE_POOL}/share/bookmarks/bookmarks"
 
 # Create file that can be used/sourced for uninstalling.
 cat > "${PACKAGE_POOL}/share/bookmarks/uninstall.txt" <<EOL
-rm -r "${PACKAGE_POOL}/share/bookmarks/bookmarks"
-rm -r "${PACKAGE_POOL}/share/bookmarks/uninstall.txt"
-rm -r "${PACKAGE_POOL}/bin/bookmarks.sh"
+rm "${PACKAGE_POOL}/share/bookmarks/bookmarks"
+rm "${PACKAGE_POOL}/share/bookmarks/uninstall.txt"
+rm "${PACKAGE_POOL}/bin/bookmarks.sh"
 rmdir "${PACKAGE_POOL}/share/bookmarks" 2> /dev/null
 EOL
 
