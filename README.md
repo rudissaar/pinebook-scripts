@@ -2,6 +2,8 @@
 
 Configuration and installation scripts for the original Pinebook (A64).
 
+All scripts in this repository are developed and tested on original Pinebook.
+
 ![Pinebook A64 14"](https://raw.githubusercontent.com/rudissaar/img-murda-eu/master/pi/pinebook-a64-14.png)
 
 * [kde-neon-config-scripts](./kde-neon-config-scripts)
