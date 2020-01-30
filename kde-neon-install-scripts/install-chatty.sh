@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Script that installs chatty application and related dependencies.
 
-VERSION='0.10'
+VERSION='0.11'
 DOWNLOAD_URL="https://github.com/chatty/chatty/releases/download/v${VERSION}/Chatty_${VERSION}.zip"
 ICON_URL='https://raw.githubusercontent.com/rudissaar/img-murda-eu/master/ch/chatty.png'
 ICON_URL_BACKUP='http://img.murda.eu/ch/chatty.png'
