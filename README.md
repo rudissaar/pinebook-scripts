@@ -7,7 +7,7 @@ Configuration and installation scripts for the Pinebook (A64) and Pinebook Pro.
 
 ![Pinebook A64 14"](https://raw.githubusercontent.com/rudissaar/img-murda-eu/master/pi/pinebook-a64-14.png)
 
-* [pinebook-a64](./pinebook-a64/kde-neon-config-scripts)
+* [pinebook-a64](./pinebook-a64)
   * [kde-neon-config-scripts](./pinebook-a64/kde-neon-config-scripts)
     * [firefox-discord-app.sh](./pinebook-a64/kde-neon-config-scripts/firefox-discord-app.sh)
     * [man-pages-fix.sh](./pinebook-a64/kde-neon-config-scripts/man-pages-fix.sh)
@@ -26,3 +26,6 @@ Configuration and installation scripts for the Pinebook (A64) and Pinebook Pro.
     * [install-powershell.sh](./pinebook-a64/armbian-buster-install-scripts/install-powershell.sh)
     * [install-rscrevolution.sh](./pinebook-a64/armbian-buster-install-scripts/install-rscrevolution.sh)
     * [mocp-rautemusik.sh](./pinebook-a64/kde-neon-install-scripts/mocp-rautemusik.sh)
+* [pinebook-pro](./pinebook-pro)
+  * [debian-desktop-install-scripts](./pinebook-pro/debian-desktop-install-scripts)
+    * [apache-netbeans.sh](./pinebook-pro/debian-desktop-install-scripts/apache-netbeans.sh)
