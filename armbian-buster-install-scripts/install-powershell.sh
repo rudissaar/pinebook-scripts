@@ -74,6 +74,14 @@ chmod +x "${POWERSHELL_PATH}/pwsh"
 ln -sf "${POWERSHELL_PATH}/pwsh" "${PACKAGE_POOL}/bin/pwsh"
 ln -sf "${PACKAGE_POOL}/bin/pwsh" "${PACKAGE_POOL}/bin/powershell"
 
+# Create a file that can be used for uninstalling.
+cat > "${POWERSHELL_PATH}/uninstall.txt" <<EOL
+rm -f "${PACKAGE_POOL}/bin/powershell"
+rm -f "${PACKAGE_POOL}/bin/pwsh"
+rm -rf "${POWERSHELL_PATH}"
+rm -f "${POWERSHELL_PATH}/uninstall.txt"
+EOL
+
 # Cleanup.
 rm -rf "${TMP_FILE}" "${TMP_PATH}"
 
