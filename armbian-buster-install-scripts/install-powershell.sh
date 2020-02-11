@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Script that installs PowerShell on current system.
 
-VERSION='6.2.3'
+VERSION='6.2.4'
 DOWNLOAD_URL="https://github.com/PowerShell/PowerShell/releases/download/v${VERSION}/powershell-${VERSION}-linux-arm64.tar.gz"
 PACKAGE_POOL='/usr/local'
 
