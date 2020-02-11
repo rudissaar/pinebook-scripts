@@ -2,6 +2,9 @@
 
 Configuration and installation scripts for the Pinebook (A64) and Pinebook Pro.
 
+* https://www.pine64.org/pinebook/
+* https://www.pine64.org/pinebook-pro/
+
 ![Pinebook A64 14"](https://raw.githubusercontent.com/rudissaar/img-murda-eu/master/pi/pinebook-a64-14.png)
 
 * [pinebook-a64](./pinebook-a64/kde-neon-config-scripts)
