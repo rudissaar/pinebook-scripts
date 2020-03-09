@@ -13,6 +13,7 @@ Configuration and installation scripts for the Pinebook (A64) and Pinebook Pro.
     * [man-pages-fix.sh](./pinebook-a64/kde-neon-config-scripts/man-pages-fix.sh)
     * [polkit-system-update-no-passwd.sh](./pinebook-a64/kde-neon-config-scripts/polkit-system-update-no-passwd.sh)
   * [kde-neon-install-scripts](./pinebook-a64/kde-neon-install-scripts)
+    * [install-apache-netbeans.sh](./pinebook-pro/debian-desktop-install-scripts/install-apache-netbeans.sh)
     * [install-chatty.sh](./pinebook-a64/kde-neon-install-scripts/install-chatty.sh)
     * [install-linssid.sh](./pinebook-a64/kde-neon-install-scripts/install-linssid.sh)
     * [mocp-rautemusik.sh](./pinebook-a64/kde-neon-install-scripts/mocp-rautemusik.sh)
@@ -28,4 +29,4 @@ Configuration and installation scripts for the Pinebook (A64) and Pinebook Pro.
     * [mocp-rautemusik.sh](./pinebook-a64/kde-neon-install-scripts/mocp-rautemusik.sh)
 * [pinebook-pro](./pinebook-pro)
   * [debian-desktop-install-scripts](./pinebook-pro/debian-desktop-install-scripts)
-    * [apache-netbeans.sh](./pinebook-pro/debian-desktop-install-scripts/apache-netbeans.sh)
+    * [install-apache-netbeans.sh](./pinebook-pro/debian-desktop-install-scripts/install-apache-netbeans.sh)

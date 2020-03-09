@@ -1,0 +1,1 @@
+../../pinebook-pro/debian-desktop-install-scripts/install-apache-netbeans.sh
