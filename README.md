@@ -30,3 +30,4 @@ Configuration and installation scripts for the Pinebook (A64) and Pinebook Pro.
 * [pinebook-pro](./pinebook-pro)
   * [debian-desktop-install-scripts](./pinebook-pro/debian-desktop-install-scripts)
     * [install-apache-netbeans.sh](./pinebook-pro/debian-desktop-install-scripts/install-apache-netbeans.sh)
+    * [install-rscrevolution.sh](./pinebook-a64/armbian-buster-install-scripts/install-rscrevolution.sh)

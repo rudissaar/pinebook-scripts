@@ -1,0 +1,1 @@
+../../pinebook-a64/armbian-buster-install-scripts/install-rscrevolution.sh
